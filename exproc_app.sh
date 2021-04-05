@@ -32,7 +32,7 @@ cpu_model_name=$(cat /proc/cpuinfo | grep "model name" | head -1 | awk 'NR==1{pr
 #get 1 cpu value in mhz
 cpu_mhz=$(cat /proc/cpuinfo | grep "^[c]pu MHz" | head -1 | awk 'NR==1{print $4}')
 #get total core assigned CPU
-cpu_core_num=$(cat /proc/cpuinfo | grep "siblings" | head -1 | awk 'NR==1{print $3}')
+cpu_core_num=$(nproc)
 #find total CPU power Mhz
 cpu_total_power=$(echo "scale=2; ${cpu_mhz} * ${cpu_core_num}" | bc)
 
