@@ -8,7 +8,7 @@ pkgs=("mpstat" "bc")
 file_name="proc_res_$(date '+%s')"
 let end=0
 
-
+#dependancies checker
 for each_pkg in ${pkgs[@]};
 do
   if ! command -v ${each_pkg} &> /dev/null
