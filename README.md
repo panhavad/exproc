@@ -47,7 +47,8 @@ It just using the existing command to check the machine performance and extract 
  8. **Enjoy the record**
 
 ## Does it really work?
-<img src="https://s4.gifyu.com/images/exproc_demo2.gif" width="1000"/>
+<img src="https://s4.gifyu.com/images/exproc_demo91527350f309e092.gif" width="1000"/>
+
 
 ## 🐫Todos
 - Add priority so that even the machine is overload script still executing
