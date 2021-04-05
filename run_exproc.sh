@@ -26,6 +26,8 @@ fi
 #query once only
 #get mem total value
 let mem_total_mb=$(free -m | awk 'NR==2{print $2}')
+#get apu model name
+cpu_model_name=$(cat /proc/cpuinfo | grep "model name" | head -1 | awk 'NR==1{print substr($0, index($0,$4))}')
 #get 1 cpu value in mhz
 cpu_mhz=$(cat /proc/cpuinfo | grep "^[c]pu MHz" | head -1 | awk 'NR==1{print $4}')
 #get total core assigned CPU
@@ -35,12 +37,14 @@ cpu_total_power=$(echo "scale=2; ${cpu_mhz} * ${cpu_core_num}" | bc)
 
 #print the summary spec
 echo "--- Current system total spec --- ${file_name}"
+echo "CPU Model: ${cpu_model_name}"
 echo "CPUs power: ${cpu_core_num} Core(s) x ${cpu_mhz} Mhz = ${cpu_total_power} Mhz"
 echo "Mem total: ${mem_total_mb} MB"
 echo "---------------------------------"
 
 #create output file
 echo "system info" > ${file_name}
+echo "cpu_model, ${cpu_model_name}" >> ${file_name}
 echo "cpu_total_core, ${cpu_core_num} Core(s)" >> ${file_name}
 echo "cpu_1_core_power, ${cpu_mhz} Mhz" >> ${file_name}
 echo "cpu_total_power, ${cpu_total_power} Mhz" >> ${file_name}
