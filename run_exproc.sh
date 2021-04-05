@@ -1,16 +1,17 @@
+#!/bin/bash
 #required
 #insatll sysstat -> mpstat
 #bc
 
 #list of dependancy package
-pkgs=("sysstat" "nano" "bc")
+pkgs=("mpstat" "bc")
 file_name="proc_res_$(date '+%s')"
 let end=0
 
 
 for each_pkg in ${pkgs[@]};
 do
-  if [ $(dpkg-query -W -f='${Status}' ${each_pkg} 2>/dev/null | grep -c "ok installed") -eq 0 ];
+  if ! command -v ${each_pkg} &> /dev/null
   then
     echo "Package name <<${each_pkg}>> was not found."
     end=1
