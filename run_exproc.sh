@@ -1,1 +1,1 @@
-nice -n -12 ./exproc_app.sh
+nice -n -12 lib/exproc_app.sh $1

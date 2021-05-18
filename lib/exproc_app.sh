@@ -6,7 +6,10 @@
 #list of dependancy package
 pkgs=("mpstat" "bc")
 file_name="proc_res_$(date '+%s')"
+#regex to check if int or not
+re='^[0-9]+$'
 let end=0
+let limit_flag=0
 
 #dependancies checker
 for each_pkg in ${pkgs[@]};
@@ -23,6 +26,21 @@ then
   echo "Please install the following package and retry the execution."
   exit
 fi
+
+#check if the param is int
+if ! [[ $1 -eq 0 ]] ; then
+    if ! [[ $1 =~ $re ]];
+	then
+		echo "Invalid Parameter: Accept Integer Only!"
+		exit 1
+	else
+	  	limit_flag=1
+	  	let res_limit=$1
+	  	echo $res_limit
+	fi
+fi
+
+
 
 #query once only
 #get mem total value
@@ -53,9 +71,19 @@ echo "mem_total, ${mem_total_mb} MB" >> ${file_name}
 echo "system info end" >> ${file_name}
 echo "time,cpu(%),ram(%),cpu(Mhz),ram(MB)" >> ${file_name}
 
-
+let interval=0
 while true
 do
+if ! [[ $limit_flag -eq 0 ]]; 
+then
+	if [[ $interval -eq $res_limit ]]; 
+	then
+		echo "*****Comeplete*****"
+		exit 1
+	else
+		((interval=interval+1))
+	fi
+fi
 #find mem used
 let mem_used_mb=$(free -m | awk 'NR==2{print $3}')
 #fine percentage of mem used
